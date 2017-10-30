@@ -1,5 +1,5 @@
 # All_Case_Study
-案例集汇总
+整个Java阶段的案例集合汇总
 
 ## 1. Java基础<br/>
 ---
