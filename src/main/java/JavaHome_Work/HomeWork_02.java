@@ -1,5 +1,9 @@
 package JavaHome_Work;
 
+import org.junit.Test;
+
+import java.util.Scanner;
+
 public class HomeWork_02 {
 
 	/**
@@ -7,15 +11,39 @@ public class HomeWork_02 {
 	 * 若是小数，则转换为一个小数后输出乘以5后的结果，若不是数字则输出"不是数字"
 	 * 需要使用正则表达式进行判断。
 	 */
-	public static void test01(){
-		
+	@Test
+	public void test01(){
+		System.out.println("请输入一个字符串");
+		Scanner scanner = new Scanner(System.in);
+		String num = scanner.nextLine();
+		//判断是否为数字
+		if(num.matches("//d")){
+			//是数字
+			if(num.lastIndexOf(".")==-1){
+				//没有小数
+				int i = Integer.parseInt(num);
+				System.out.println(i*10);
+			}else{
+				//是小数
+				double v = Double.parseDouble(num);
+				System.out.println(v*5);
+			}
+		}else{
+			System.out.println("不是数字");
+		}
+
 	}
 	
 	/**
 	 * 将字符串123,456,789,012根据","拆分，并输出拆分后的每一项
 	 */
-	public static void test02(){
-			
+	@Test
+	public void test02(){
+		String string = "123,456,789,012";
+		String[] split = string.split(",");
+		for(int i = 0;i<split.length;i++){
+			System.out.println(split[i]);
+		}
 	}
 	
 	/**
