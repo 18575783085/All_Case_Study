@@ -1,5 +1,11 @@
 package JavaHome_Work;
 
+import org.junit.Test;
+
+import java.util.*;
+
+
+
 public class HomeWork_05 {
 
 	/**
@@ -8,8 +14,34 @@ public class HomeWork_05 {
 	 * @author OYE
 	 *
 	 */
-	public static void test01(){
-		
+	@Test
+	public void test01(){
+		/*
+		队列：先进先出
+		 */
+		Queue<Integer> integerQueue = new ArrayDeque<>();
+		integerQueue.add(1);
+		integerQueue.add(2);
+		integerQueue.add(3);
+		integerQueue.add(4);
+		integerQueue.add(5);
+		for(Integer i :integerQueue){
+			System.out.println(i);
+		}
+		System.out.println();
+
+		Queue<Integer> integerQueue2 = new ArrayDeque<>();
+		integerQueue2.offer(1);
+		integerQueue2.offer(2);
+		integerQueue2.offer(3);
+		integerQueue2.offer(4);
+		integerQueue2.offer(5);
+		for (Integer integer:integerQueue2){
+			System.out.println(integer);
+		}
+		System.out.println("peek:"+integerQueue2.peek());
+		System.out.println("poll:"+integerQueue2.poll());
+
 	}
 	
 	/**
@@ -18,8 +50,32 @@ public class HomeWork_05 {
 	 * @author OYE
 	 *
 	 */
-	public static void test02(){
-		
+	@Test
+	public void test02(){
+		/*
+		栈：先进后出
+		 */
+		Stack<Integer> stack = new Stack<>();
+		stack.push(1);
+		stack.push(2);
+		stack.push(3);
+		stack.push(4);
+		stack.push(5);
+		for (Integer integer:stack){
+			System.out.println(integer);
+		}
+		System.out.println("----------------------");
+		while (stack.size()>0){
+			Integer pop = stack.pop();
+			System.out.println(pop);
+		}
+		System.out.println(stack);
+		System.out.println("----------------------");
+		while (stack.size()>0){
+			Integer peek = stack.peek();
+			System.out.println(peek);
+		}
+
 	}
 	
 	/**
@@ -66,8 +122,34 @@ public class HomeWork_05 {
 	 * @author OYE
 	 *
 	 */
-	public static void test05(){
-		
+	@Test
+	public void test05(){
+		String string = "销售:张三;财务:李四;销售:王五;财务:赵六;程序:mike;程序:jerry;美工:jackson;前端:green;前端:nick;程序:钱七;销售:alice;销售:bingbang";
+		String[] splitArr = string.split(";");
+
+		Map<String,Integer> map = new HashMap<>();
+
+		for (int i=0;i<splitArr.length;i++){
+			String[] person = splitArr[i].split(":");
+
+			//判断map集合中是否存在相同的key，有则累加，无则添加
+			if(map.containsKey(person[0])){
+				//存在
+				map.put(person[0],map.get(person[0])+1);
+			}else{
+				//不存在
+				map.put(person[0],1);
+			}
+		}
+
+		//遍历1
+		for(Map.Entry<String,Integer> entry:map.entrySet()){
+			String key = entry.getKey();
+			Integer value = entry.getValue();
+			System.out.println(key+"="+value);
+		}
+
+
 	}
 
 

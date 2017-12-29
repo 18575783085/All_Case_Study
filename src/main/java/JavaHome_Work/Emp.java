@@ -1,4 +1,9 @@
 package JavaHome_Work;
+
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * 定义私有属性:
  * int id;
@@ -22,6 +27,83 @@ package JavaHome_Work;
  * @author OYE
  *
  */
-public class Emp {
+public class Emp implements Serializable{
+    private int id;
+    private String name;
+    private int age;
+    private String gender;
+    private int salary;
+    private Date hiredate;//入职时间
 
+    //构造方法
+
+
+    public Emp(int id, String name, int age, String gender, int salary, Date hiredate) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.salary = salary;
+        this.hiredate = hiredate;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public int getSalary() {
+        return salary;
+    }
+
+    public void setSalary(int salary) {
+        this.salary = salary;
+    }
+
+    public Date getHiredate() {
+        return hiredate;
+    }
+
+    public void setHiredate(Date hiredate) {
+        this.hiredate = hiredate;
+    }
+
+    @Override
+    public String toString() {
+        return "Emp{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                ", gender='" + gender + '\'' +
+                ", salary=" + salary +
+                ", hiredate=" + new SimpleDateFormat("yyyy-MM-dd").format(hiredate) +
+                '}';
+    }
 }

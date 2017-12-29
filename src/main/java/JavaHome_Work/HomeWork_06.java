@@ -1,5 +1,12 @@
 package JavaHome_Work;
 
+import javax.sound.midi.Soundbank;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Scanner;
+
 public class HomeWork_06 {
 
 
@@ -10,6 +17,10 @@ public class HomeWork_06 {
 	 *
 	 */
 	public static void test01(){
+		File file = new File("myfile.text");
+		System.out.println("文件名字："+file.getName());
+		System.out.println("文件的大小："+file.length());
+		System.out.println("文件最后修改的时间："+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(file.lastModified())));
 		
 	}
 	
@@ -21,7 +32,47 @@ public class HomeWork_06 {
 	 * @author OYE
 	 *
 	 */
-	public static void test02(){
+	public static void test02() throws IOException {
+		System.out.println("请输入一个文件名：");
+		Scanner scanner = new Scanner(System.in);
+		String fileName = scanner.nextLine();
+		File file = new File(fileName);
+		//判断文件是文件还是目录
+		if (file.isFile()){
+			//判断该文件是否存在
+			if(file.exists()){
+				//自定义序号
+				int index = 1;
+
+				//存在，则创建文件副本
+				//截取文件名
+				String name = fileName.substring(0,fileName.lastIndexOf("."));
+				//后缀
+				String suffix = fileName.substring(fileName.lastIndexOf(".")+1);
+
+				while (true){
+					//拼接文件名
+					String newFileName = name + "_副本" + index + "." + suffix;
+					//再判断是否存在
+					file = new File(newFileName);
+					if (!file.exists()){
+						//不存在，继续创建
+						file.createNewFile();
+						break;
+					}
+					index++;
+				}
+
+			}else{
+				//不存在,则创建文件
+				file.createNewFile();
+				System.out.println("创建成功");
+
+			}
+		}else{
+			System.out.println("不好意思，请重新输入");
+		}
+
 		
 	}
 	

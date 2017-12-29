@@ -1,5 +1,10 @@
 package JavaHome_Work;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 public class HomeWork_08 {
 
 	/**
@@ -10,7 +15,46 @@ public class HomeWork_08 {
 	 *
 	 */
 	public static void test01(){
-		
+		FileInputStream fis = null;
+		FileOutputStream fos = null;
+		try {
+			//创建文件输入流
+			 fis = new FileInputStream("myfile.text");
+			//创建文件写出流
+			 fos = new FileOutputStream("myfile_cp.txt");
+
+			int len = -1;
+			byte[] data = new byte[10*1024];
+
+			while ((len = fis.read(data)) != -1){
+				fos.write(data,0,len);
+			}
+			System.out.println("复制完毕");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally {
+			if(fis !=null){
+				try {
+					fis.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}finally {
+					fis = null;
+				}
+			}
+			if (fos != null){
+				try {
+					fos.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				} finally {
+					fos = null;
+				}
+			}
+		}
+
 	}
 	
 	/**

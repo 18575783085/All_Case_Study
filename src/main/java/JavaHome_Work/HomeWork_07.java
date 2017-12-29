@@ -1,5 +1,11 @@
 package JavaHome_Work;
 
+import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Scanner;
+
 public class HomeWork_07 {
 
 	/**
@@ -7,7 +13,21 @@ public class HomeWork_07 {
 	 * @author OYE
 	 *
 	 */
-	public static void test01(){
+	public static void test01() throws IOException {
+		//创建文件输入流
+		FileInputStream fis = new FileInputStream("myfile.txt");
+		//创建文件输出流
+		FileOutputStream fos = new FileOutputStream("myfile_cp.txt");
+
+		int len = -1 ;
+		while ((len = fis.read()) != len){
+			fos.write(len);
+		}
+		System.out.println("写出完毕");
+
+		//关闭资源
+		fis.close();
+		fos.close();
 		
 	}
 	
@@ -16,7 +36,26 @@ public class HomeWork_07 {
 	 * @author OYE
 	 *
 	 */
-	public static void test02(){
+	public static void test02() throws IOException {
+		//创建文件输入流
+		FileInputStream fis = new FileInputStream("myfile.txt");
+		//创建缓冲输入流
+		BufferedInputStream bis = new BufferedInputStream(fis);
+
+		//创建文件输出流
+		FileOutputStream fos = new FileOutputStream("myfile_cp.txt");
+		//创建缓冲输出流
+		BufferedOutputStream bos = new BufferedOutputStream(fos);
+
+		int len = -1 ;
+		while((len = bis.read()) != -1){
+			bos.write(len);
+		}
+		System.out.println("写出完毕");
+
+		//关闭资源
+		bis.close();
+		bos.close();
 		
 	}
 	
@@ -27,7 +66,38 @@ public class HomeWork_07 {
 	 * @author OYE
 	 *
 	 */
-	public static void test03(){
+	public static void test03() throws ParseException, IOException {
+		System.out.println("请输入员工人数：");
+		Scanner scanner = new Scanner(System.in);
+		Integer num = Integer.parseInt(scanner.nextLine());
+
+		ObjectOutputStream oos = null;
+
+		for (int i=1;i<=num;i++){
+			//输入员工信息
+			String emp = scanner.nextLine();
+
+			//拆分员工信息，分别赋值到emp对象的属性
+			String[] empArr = emp.split(",");
+			//张三,25,男,5000,2006-3-18
+			String name = empArr[0];
+			int age = Integer.parseInt(empArr[1]);
+			String gender = empArr[2];
+			int salary = Integer.parseInt(empArr[3]);
+			Date hiredate = new SimpleDateFormat("yyyy-MM-dd").parse(empArr[4]);
+
+			Emp person = new Emp(i,name,age,gender,salary,hiredate);
+
+			//创建文件输出流
+			FileOutputStream fos = new FileOutputStream(person.getName()+".obj");
+			//创建对象输出流
+			 oos = new ObjectOutputStream(fos);
+			//写出对象
+			oos.writeObject(oos);
+		}
+
+		//关闭资源
+		oos.close();
 		
 	}
 	
@@ -47,6 +117,7 @@ public class HomeWork_07 {
 	 *
 	 */
 	public static void test05(){
+
 		
 	}
 	
@@ -57,7 +128,30 @@ public class HomeWork_07 {
 	 * @author OYE
 	 *
 	 */
-	public static void test06(){
+	public static void test06() throws IOException {
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("请输入文件名：");
+		String fileName = scanner.nextLine();
+
+		//创建文件写出流
+		FileOutputStream fos = new FileOutputStream(fileName);
+		//创建字符转换流
+		OutputStreamWriter osw = new OutputStreamWriter(fos,"GBK");
+		//创建字符输出流
+		PrintWriter pw = new PrintWriter(osw,true);
+
+		System.out.println("请写点东西(输入exit则退出程序)：");
+		String message = null;
+		while (true){
+			message = scanner.nextLine();
+			if(message.equals("exit")){
+				System.out.println("退出程序");
+				break;
+			}
+			pw.println(message);
+		}
+		//关闭资源
+		pw.close();
 		
 	}
 	

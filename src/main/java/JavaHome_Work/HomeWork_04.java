@@ -1,5 +1,12 @@
 package JavaHome_Work;
 
+import com.sun.org.apache.xpath.internal.SourceTree;
+import org.junit.Test;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
 public class HomeWork_04 {
 
 	/**
@@ -11,8 +18,28 @@ public class HomeWork_04 {
 	 * 然后将c1集合中的"two"删除后再输出c1集合
 	 *
 	 */
-	public static void test01(){
-		
+	@Test
+	public void test01(){
+		List<String> list1 = new ArrayList<String>();
+		list1.add("one");
+		list1.add("two");
+		list1.add("three");
+
+		List<String> list2 = new ArrayList<String>();
+		list2.add("four");
+		list2.add("five");
+		list2.add("six");
+
+		list1.addAll(list2);
+
+		List<String> list3 = new ArrayList<String>();
+		list3.add("one");
+		list3.add("five");
+
+		System.out.println("集合c1是否包含集合c3的所有元素:"+list1.containsAll(list3));
+
+		list1.remove("two");
+		System.out.println(list1);
 	}
 	
 	/**
@@ -21,8 +48,34 @@ public class HomeWork_04 {
 	 *   最后再将删除元素后的集合使用新循环遍历，并输出每一个元素。
 	 *
 	 */
-	public static void test02(){
-		
+	@Test
+	public void test02(){
+		List<String> list1 = new ArrayList<String>();
+		list1.add("1");
+		list1.add("$");
+		list1.add("2");
+		list1.add("$");
+		list1.add("3");
+		list1.add("$");
+		list1.add("4");
+		System.out.println(list1);
+
+		Iterator<String> iterator = list1.iterator();
+
+		while (iterator.hasNext()){
+			String next = iterator.next();
+			//找出与“$”匹配的字符
+			if ("$".equals(next)){
+				//移除
+				iterator.remove();
+			}
+		}
+		System.out.println(list1);
+
+		for(String s:list1){
+			System.out.println(s);
+		}
+
 	}
 	
 	/**
@@ -35,8 +88,41 @@ public class HomeWork_04 {
 	 * @author OYE
 	 *
 	 */
-	public static void test03(){
-		
+	@Test
+	public void test03(){
+		//ArrayList
+		List<String> list = new ArrayList<String>();
+		list.add("one");
+		list.add("two");
+		list.add("three");
+		list.add("four");
+
+		System.out.println("集合第二个元素："+list.get(1));
+		list.set(2,"3");
+		System.out.println(list);
+
+		list.add(1,"2");
+		System.out.println(list);
+
+		System.out.println(list.remove(2));
+
+		//LinkedList
+		LinkedList<String> linkedList = new LinkedList<String>();
+		linkedList.add("one");
+		linkedList.add("two");
+		linkedList.add("three");
+		linkedList.add("four");
+		System.out.println(linkedList);
+
+		System.out.println("集合第二个元素："+linkedList.get(1));
+		linkedList.set(2,"3");
+		System.out.println(linkedList);
+
+		linkedList.add(1,"2");
+		System.out.println(linkedList);
+
+		String remove = linkedList.remove(2);
+		System.out.println(remove);
 	}
 	
 	/**
@@ -48,8 +134,27 @@ public class HomeWork_04 {
 	 * @author OYE
 	 *
 	 */
-	public static void test04(){
-		
+	@Test
+	public void test04(){
+		List<Integer> list  = new ArrayList<Integer>();
+		for (int i=0;i<10;i++){
+			list.add(i);
+		}
+		System.out.println(list);
+
+		List<Integer> subList = list.subList(3, 7);
+		System.out.println(subList);
+
+		for (int i=0;i<subList.size();i++){
+			Integer integer = subList.get(i);
+			subList.set(i,integer*10);
+		}
+		System.out.println(subList);
+		System.out.println(list);
+		list.removeAll(list.subList(7,10));
+		System.out.println(list);
+
+
 	}
 	
 	/**
@@ -58,8 +163,21 @@ public class HomeWork_04 {
 	 * @author OYE
 	 *
 	 */
-	public static void test05(){
-		
+	@Test
+	public void test05(){
+		List<Integer> list = new ArrayList<Integer>();
+		for (int i =0;i<10;i++){
+			list.add(i);
+		}
+		System.out.println(list);
+
+		//集合转数组
+		Integer[] integerArr = list.toArray(new Integer[list.size()]);
+		for (Integer integer:integerArr){
+			System.out.println(integer);
+		}
+
+
 	}
 	
 	/**
@@ -68,8 +186,13 @@ public class HomeWork_04 {
 	 * @author OYE
 	 *
 	 */
-	public static void test06(){
-		
+	@Test
+	public void test06(){
+		String[] stringArr = new String[]{"one","two","three"};
+
+		List<String> stringList = Arrays.asList(stringArr);
+		System.out.println(stringList);
+
 	}
 	
 	/**
@@ -78,8 +201,33 @@ public class HomeWork_04 {
 	 * @author OYE
 	 *
 	 */
-	public static void test07(){
-		
+	@Test
+	public void test07(){
+		List<Integer> integerList = new ArrayList<>();
+		for (int i=0;i<10;i++){
+			integerList.add((int)(Math.random()*100));
+		}
+		System.out.println(integerList);
+		Collections.sort(integerList);
+		System.out.println("默认从小到大："+integerList);
+
+		//从写sort方法
+		Collections.sort(integerList, new Comparator<Integer>() {
+			@Override
+			public int compare(Integer o1, Integer o2) {
+				return o2-o1;
+			}
+		});
+		System.out.println("从大到小："+integerList);
+
+		Collections.sort(integerList, new Comparator<Integer>() {
+			@Override
+			public int compare(Integer o1, Integer o2) {
+				return o1.compareTo(o2);
+			}
+		});
+		System.out.println(integerList);
+
 	}
 	
 	/**
@@ -88,8 +236,18 @@ public class HomeWork_04 {
 	 * @author OYE
 	 *
 	 */
-	public static void test08(){
-		
+	@Test
+	public void test08() throws ParseException {
+		List<Date> dateList = new ArrayList<>();
+		dateList.add(new SimpleDateFormat("yyyy-MM-dd").parse("2017-10-01"));
+		dateList.add(new SimpleDateFormat("yyyy-MM-dd").parse("2016-10-10"));
+		dateList.add(new SimpleDateFormat("yyyy-MM-dd").parse("2018-10-01"));
+
+		Collections.sort(dateList);
+		/*
+			sort方法对日期的排序不是按我们生活中的排序来进行排，而是单纯的根据数字的大小来进行从小到大排序
+		 */
+		System.out.println("从小到大："+dateList);
 	}
 	
 	/**
