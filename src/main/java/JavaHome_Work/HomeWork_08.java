@@ -1,9 +1,7 @@
 package JavaHome_Work;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
+import java.util.*;
 
 public class HomeWork_08 {
 
@@ -65,7 +63,38 @@ public class HomeWork_08 {
 	 *
 	 */
 	public static void test02(){
-		
+
+		PrintWriter pw = null;
+		try {
+			//创建文件写出流
+			FileOutputStream fos = new FileOutputStream("note.txt");
+			//创建字符转换流
+			OutputStreamWriter osw = new OutputStreamWriter(fos,"GBK");
+			//创建字符输出流
+			pw = new PrintWriter(osw,true);
+
+			Scanner scanner = new Scanner(System.in);
+			String message = null;
+			while (true){
+				message = scanner.nextLine();
+				if(message.equals("exit")){
+					System.out.println("退出程序");
+					break;
+				}
+				pw.println(message);
+
+			}
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		} finally {
+			if (pw != null){
+				pw.close();
+			}
+		}
+
 	}
 	
 	/**
@@ -75,7 +104,37 @@ public class HomeWork_08 {
 	 *
 	 */
 	public static void test03(){
-		
+
+		BufferedReader  br = null;
+		try {
+			//创建文件输入流
+			FileInputStream fis = new FileInputStream("note.txt");
+			//创建文件字符流
+			InputStreamReader isr = new InputStreamReader(fis,"GBK");
+			//创建字符输入流
+			br = new BufferedReader(isr);
+
+			String message = null;
+			while ( (message = br.readLine()) != null){
+				System.out.println(message);
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (br != null){
+				try {
+					br.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				} finally {
+					br = null;
+				}
+			}
+		}
 	}
 	
 	/**
@@ -112,7 +171,51 @@ public class HomeWork_08 {
 	 *
 	 */
 	public static void test05(){
-		
+		RandomAccessFile randomAccessFile = null;
+		try {
+			 randomAccessFile = new RandomAccessFile("emp.dat","r");
+
+			List<Emp> empList = new ArrayList<>();
+
+			for (int i=1;i<=10;i++){
+				byte[] data1 = new byte[32];
+				randomAccessFile.read(data1);
+				String name = new String(data1,"UTF-8").trim();
+				int age = randomAccessFile.readShort();
+				byte[] data2 = new byte[10];
+				randomAccessFile.read(data2);
+				String gender = new String(data2,"UTF-8").trim();
+				int salary = randomAccessFile.readInt();
+				long hiredate = randomAccessFile.readLong();
+
+				Emp emp = new Emp(i,name,age,gender,salary,new Date(hiredate));
+				empList.add(emp);
+			}
+
+			//按入职从晚到早排序
+			Collections.sort(empList, new Comparator<Emp>() {
+				@Override
+				public int compare(Emp o1, Emp o2) {
+					return o2.getHiredate().compareTo(o1.getHiredate());
+				}
+			});
+			System.out.println(empList);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if(randomAccessFile != null){
+				try {
+					randomAccessFile.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				} finally {
+					randomAccessFile = null;
+				}
+			}
+		}
+
 	}
 	
 	/**
