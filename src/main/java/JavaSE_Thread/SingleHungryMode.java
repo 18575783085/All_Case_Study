@@ -21,8 +21,8 @@ package JavaSE_Thread;
 public class SingleHungryMode {
     /*
     懒汉式
-    1、构造器私有化
-    2、声明私有化的静态属性
+    1、声明私有化的静态属性
+    2、构造器私有化
     3、对外提供访问属性的静态方法，确保该对象存在
      */
 
@@ -51,9 +51,9 @@ public class SingleHungryMode {
 
 /*
 饿汉式
-1、构造器私有化
-2、声明私有的静态属性，同时创建该对象
-3、对外提供访问属性deep静态方法
+1、声明私有的静态属性，同时创建该对象
+2、构造器私有化
+3、对外提供访问属性的静态方法
  */
 class HungryMode{
 
